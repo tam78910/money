@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $pays = Auth::user()->pays()->get();
+        //$pays = Auth::user()->pays()->with("kind")->get();
         return view('home', compact("pays"));
     }
 }

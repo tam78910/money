@@ -8,6 +8,8 @@ class Pay extends Model
 {
     protected $fillable = ['amount', 'description'];
 
+    protected $appends = ['date'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -16,5 +18,10 @@ class Pay extends Model
     public function kind()
     {
         return $this->belongsTo(Kind::class);
+    }
+
+    public function getDateAttribute()
+    {
+        return $this->created_at->format('d-m-Y');            
     }
 }
