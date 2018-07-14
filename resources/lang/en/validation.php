@@ -116,6 +116,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'kind_id' => 'Kind'
+    ],
 
 ];

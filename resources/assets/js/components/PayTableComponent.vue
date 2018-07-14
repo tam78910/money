@@ -95,8 +95,7 @@
             this.getKinds();
         },
         methods: {
-            getData: function() {
-                let url = route('api.pays.index');
+            getData: function(url= route('api.pays.index')) {
                 let vm = this;
                 axios.get(url).then( function(res) {
                     vm.pays = res.data.data;

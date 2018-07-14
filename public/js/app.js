@@ -43445,7 +43445,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         getData: function getData() {
-            var url = route('api.pays.index');
+            var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : route('api.pays.index');
+
             var vm = this;
             axios.get(url).then(function (res) {
                 vm.pays = res.data.data;
