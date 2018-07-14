@@ -43201,7 +43201,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/ExampleComponent.vue"
+Component.options.__file = "resources\\assets\\js\\components\\ExampleComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -43210,9 +43210,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7168fb6a", Component.options)
+    hotAPI.createRecord("data-v-0ca92eac", Component.options)
   } else {
-    hotAPI.reload("data-v-7168fb6a", Component.options)
+    hotAPI.reload("data-v-0ca92eac", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -43290,7 +43290,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7168fb6a", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0ca92eac", module.exports)
   }
 }
 
@@ -43320,7 +43320,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/PayTableComponent.vue"
+Component.options.__file = "resources\\assets\\js\\components\\PayTableComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -43329,9 +43329,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1653eaf0", Component.options)
+    hotAPI.createRecord("data-v-d341b4a0", Component.options)
   } else {
-    hotAPI.reload("data-v-1653eaf0", Component.options)
+    hotAPI.reload("data-v-d341b4a0", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -43378,25 +43378,85 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             pays: [],
-            pagination: {}
+            pagination: {},
+            create: false,
+            kinds: {},
+            kind: {},
+            pay: {},
+            errors: {}
         };
     },
     mounted: function mounted() {
-        var url = route('api.pays.index');
-        this.getData(url);n;
+        this.getData();
+        this.getKinds();
     },
     methods: {
-        getData: function getData(url) {
-
+        getData: function getData() {
+            var url = route('api.pays.index');
             var vm = this;
             axios.get(url).then(function (res) {
                 vm.pays = res.data.data;
                 vm.makePagination(res.data);
+            });
+        },
+        getKinds: function getKinds() {
+            var url = route('api.pays.kinds');
+            var vm = this;
+            axios.get(url).then(function (res) {
+                vm.kinds = res.data;
             });
         },
         makePagination: function makePagination(data) {
@@ -43407,7 +43467,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 prev_page_url: data.links.prev
             };
             this.pagination = pagination;
+        },
+        saveData: function saveData() {
+            var url = route('api.pays.save');
+            var vm = this;
+            vm.errors = {};
+            axios.post(url, this.pay).then(function (res) {
+                vm.create = false;
+                vm.getData();
+                vm.pay = {};
+            }).catch(function (er) {
+                var res = er.response;
+                if (res.status == 422) {
+                    vm.errors = res.data.errors;
+                }
+            });
         }
+
     }
 });
 
@@ -43420,63 +43496,307 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "pagination" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { disabled: !_vm.pagination.prev_page_url },
-          on: {
-            click: function($event) {
-              _vm.getData(_vm.pagination.prev_page_url)
-            }
-          }
-        },
-        [_vm._v("\n            Previous\n        ")]
-      ),
-      _vm._v(" "),
-      _c("span", [
-        _vm._v(
-          "Page " +
-            _vm._s(_vm.pagination.current_page) +
-            " of " +
-            _vm._s(_vm.pagination.last_page)
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-default",
-          attrs: { disabled: !_vm.pagination.next_page_url },
-          on: {
-            click: function($event) {
-              _vm.getData(_vm.pagination.next_page_url)
-            }
-          }
-        },
-        [_vm._v("Next\n        ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.pays, function(pay) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(pay.date))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(pay.kind.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(pay.amount.toLocaleString("en")))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(pay.description))])
+    _vm.create
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "panel panel-default" }, [
+              _c("div", { staticClass: "panel-heading" }, [
+                _vm._v("New Payment")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "panel-body" }, [
+                _c(
+                  "form",
+                  { staticClass: "form-horizontal", attrs: { action: "" } },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group",
+                        class: _vm.errors.kind_id ? "has-error" : ""
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "control-label col-md-2",
+                            attrs: { for: "kind_id" }
+                          },
+                          [_vm._v("Kind:")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-8" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.pay.kind_id,
+                                  expression: "pay.kind_id"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { name: "kind_id", id: "kind_id" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.pay,
+                                    "kind_id",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            _vm._l(_vm.kinds, function(kind) {
+                              return _c(
+                                "option",
+                                { key: kind.id, domProps: { value: kind.id } },
+                                [_vm._v(_vm._s(kind.name))]
+                              )
+                            })
+                          ),
+                          _vm._v(" "),
+                          _vm.errors.kind_id
+                            ? _c("span", { staticClass: "help-block" }, [
+                                _vm._v(_vm._s(_vm.errors.kind_id[0]))
+                              ])
+                            : _vm._e()
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group",
+                        class: _vm.errors.amount ? "has-error" : ""
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "control-label col-md-2",
+                            attrs: { for: "amount" }
+                          },
+                          [_vm._v("Amount:")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-8" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.pay.amount,
+                                expression: "pay.amount"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "amount", id: "amount" },
+                            domProps: { value: _vm.pay.amount },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.pay, "amount", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.amount
+                            ? _c("span", { staticClass: "help-block" }, [
+                                _vm._v(_vm._s(_vm.errors.amount[0]))
+                              ])
+                            : _vm._e()
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "form-group",
+                        class: _vm.errors.description ? "has-error" : ""
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "control-label col-md-2",
+                            attrs: { for: "amount" }
+                          },
+                          [_vm._v("Description:")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-8" }, [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.pay.description,
+                                expression: "pay.description"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "description", id: "description" },
+                            domProps: { value: _vm.pay.description },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.pay,
+                                  "description",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.description
+                            ? _c("span", { staticClass: "help-block" }, [
+                                _vm._v(_vm._s(_vm.errors.description[0]))
+                              ])
+                            : _vm._e()
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.saveData()
+                              }
+                            }
+                          },
+                          [_vm._v("Save")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-default",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.create = false
+                              }
+                            }
+                          },
+                          [_vm._v("Cancel")]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
           ])
-        })
-      )
-    ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.create
+      ? _c("div", { staticClass: "display" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success btn-sm",
+                  on: {
+                    click: function($event) {
+                      _vm.create = !_vm.create
+                    }
+                  }
+                },
+                [_vm._v("New")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "pagination" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { disabled: !_vm.pagination.prev_page_url },
+                    on: {
+                      click: function($event) {
+                        _vm.getData(_vm.pagination.prev_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Previous\n                ")]
+                ),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v(
+                    "Page " +
+                      _vm._s(_vm.pagination.current_page) +
+                      " of " +
+                      _vm._s(_vm.pagination.last_page)
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-default",
+                    attrs: { disabled: !_vm.pagination.next_page_url },
+                    on: {
+                      click: function($event) {
+                        _vm.getData(_vm.pagination.next_page_url)
+                      }
+                    }
+                  },
+                  [_vm._v("Next\n                ")]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("table", { staticClass: "table" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.pays, function(pay) {
+                return _c("tr", { key: pay.id }, [
+                  _c("td", [_vm._v(_vm._s(pay.date))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pay.kind.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pay.amount.toLocaleString("en")))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pay.description))])
+                ])
+              })
+            )
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -43500,7 +43820,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1653eaf0", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-d341b4a0", module.exports)
   }
 }
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pay extends Model
 {
-    protected $fillable = ['amount', 'description'];
+    protected $fillable = ['kind_id', 'amount', 'description'];
 
     protected $appends = ['date'];
 
@@ -22,6 +22,6 @@ class Pay extends Model
 
     public function getDateAttribute()
     {
-        return $this->created_at->format('d-m-Y');            
+        return $this->created_at->format('d.m.Y');            
     }
 }
